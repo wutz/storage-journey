@@ -1,0 +1,10 @@
+node_modules
+dist
+.output
+.wrangler
+.tanstack
+.dev.vars*
+.env*
+*.log
+.DS_Store
+worker-configuration.d.ts
