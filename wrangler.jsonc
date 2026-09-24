@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "storage-journey",
+  "compatibility_date": "2026-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "workers_dev": true,
+  "preview_urls": true,
+  "observability": { "enabled": true },
+  // 预渲染页面是 /learn/xxx/index.html，直接以 /learn/xxx 提供，避免 307 到带斜杠的地址
+  "assets": { "html_handling": "drop-trailing-slash" }
+}

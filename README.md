@@ -22,7 +22,7 @@
 ## 技术栈
 
 - [TanStack Start](https://tanstack.com/start)（React 19 + TanStack Router），全部页面构建时预渲染
-- Tailwind CSS v4，设计规范见 [DESIGN.md](./DESIGN.md)（Geist 体系 + Storage Teal `#0f766e`）
+- Tailwind CSS v4，设计规范见 [DESIGN.md](./DESIGN.md)（Geist 体系 + Storage Amber `#b45309`）
 - 课文为 Markdown，服务端用 `marked` + `highlight.js` 渲染
 - 部署到 Cloudflare Workers（`@cloudflare/vite-plugin`）
 
