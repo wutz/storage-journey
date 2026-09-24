@@ -470,19 +470,21 @@ Cards are rectangles at 12–16px radius; marketing buttons and category tabs ar
 ## Project Theme — storage-journey
 
 本项目沿用上面的 Geist / Vercel 设计语言（近白画布、墨色文字、1px 发丝边框、Geist Sans + Geist Mono），
-只把强调色从 Vercel Blue 换成 **Storage Teal**。青绿色取自存储阵列与硬盘活动指示灯，冷静、可靠，
-在白底上对比度满足 WCAG AA：
+只把强调色从 Vercel Blue 换成 **Storage Amber**。琥珀色取自硬盘活动指示灯、磁带与冷归档的暖色调，
+温暖、有辨识度；`#b45309` 在白底上对比度满足 WCAG AA：
 
 | Token | Value | Use |
 |---|---|---|
-| `accent` | `#0f766e` | 链接、焦点环、当前章节高亮、进度条、可用容量条 |
-| `accent-deep` | `#115e59` | hover / pressed |
-| `accent-soft` | `#d7f3ee` | 提示框底色、选中态浅底、I/O 层级徽标 |
-| `cyan` | `#22d3ee` | hero 渐变中段 |
-| `amber` | `#f59e0b` | 磁盘活动灯琥珀色，仅用于 favicon 与 hero 渐变点缀 |
+| `accent` | `#b45309` | 链接、焦点环、当前章节高亮、进度条、可用容量条 |
+| `accent-deep` | `#92400e` | hover / pressed |
+| `accent-soft` | `#fef3c7` | 选中态浅底、I/O 层级徽标 |
+| `amber` | `#f59e0b` | hero 渐变主色、favicon 描边 |
+| `orange` | `#f97316` | hero 渐变中段 |
+| `rose` | `#f43f5e` | hero 渐变点缀 |
 
-- 首屏 hero 的网格渐变以 `#14b8a6 → #22d3ee → #2563eb → #f59e0b` 为主，其余界面保持黑白。
+- 首屏 hero 的网格渐变以 `#f59e0b → #f97316 → #f43f5e → #facc15` 为主，其余界面保持黑白。
 - 学习阶段徽标使用 Geist Mono 大写 eyebrow（如 `STAGE 01 · BEGINNER`）。
-- 提示框配色：`TIP` 用 accent，`LAB` 用蓝 `#2563eb`，`QUEST`（闯关挑战）用品红 `#db2777`，`WARNING` / `DANGER` 沿用 Geist 的 warning / error。
+- 提示框配色：`TIP` 用绿 `#059669`（避免与琥珀 accent 和 `WARNING` 混淆），`LAB` 用蓝 `#2563eb`，`QUEST`（闯关挑战）用品红 `#db2777`，`PROD` 用 violet，`WARNING` / `DANGER` 沿用 Geist 的 warning / error。
 - 课文正文 16px / 28px 行高，最大宽度约 72ch，代码块使用 `code-block` 规范。
-- 计算器（`/calculator`）的结果以大号数字 + 发丝边框卡片呈现，容量瀑布条最后一段使用 accent，其余段使用 accent 的 40% 明度 `#99d5cc`。
+- 计算器（`/calculator`）的结果以大号数字 + 发丝边框卡片呈现，容量瀑布条最后一段使用 accent，其余段使用浅琥珀 `#fcd9a4`。
+- favicon：墨色圆角底 + 琥珀描边的磁盘柱体，绿色活动灯。

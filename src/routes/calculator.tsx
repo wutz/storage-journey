@@ -287,7 +287,7 @@ function Calculator() {
                     </div>
                     <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-hairline-soft">
                       <div
-                        className={`h-full rounded-full ${i === waterfall.length - 1 ? 'bg-accent' : 'bg-[#99d5cc]'}`}
+                        className={`h-full rounded-full ${i === waterfall.length - 1 ? 'bg-accent' : 'bg-[#fcd9a4]'}`}
                         style={{ width: `${(w.value / r.raw) * 100}%` }}
                       />
                     </div>

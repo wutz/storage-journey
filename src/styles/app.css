@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* Design tokens — 见 DESIGN.md（Geist 体系 + Platter Teal 强调色） */
+/* Design tokens — 见 DESIGN.md（Geist 体系 + Storage Amber 强调色） */
 @theme {
   --font-sans: 'Geist', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', Arial, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -13,11 +13,12 @@
   --color-hairline-soft: #f2f2f2;
   --color-canvas: #fafafa;
   --color-elevated: #ffffff;
-  --color-accent: #0f766e;
-  --color-accent-deep: #115e59;
-  --color-accent-soft: #d7f3ee;
-  --color-cyan: #22d3ee;
+  --color-accent: #b45309;
+  --color-accent-deep: #92400e;
+  --color-accent-soft: #fef3c7;
+  --color-orange: #f97316;
   --color-amber: #f59e0b;
+  --color-rose: #f43f5e;
   --color-violet: #7928ca;
   --color-warning: #f5a623;
   --color-warning-soft: #ffefcf;
@@ -57,10 +58,10 @@
 
 .mesh {
   background:
-    radial-gradient(40% 60% at 20% 30%, rgba(20, 184, 166, 0.3), transparent 70%),
-    radial-gradient(35% 55% at 55% 20%, rgba(34, 211, 238, 0.24), transparent 70%),
-    radial-gradient(35% 60% at 80% 45%, rgba(37, 99, 235, 0.16), transparent 70%),
-    radial-gradient(30% 40% at 65% 80%, rgba(245, 158, 11, 0.18), transparent 70%);
+    radial-gradient(40% 60% at 20% 30%, rgba(245, 158, 11, 0.32), transparent 70%),
+    radial-gradient(35% 55% at 55% 20%, rgba(249, 115, 22, 0.22), transparent 70%),
+    radial-gradient(35% 60% at 80% 45%, rgba(244, 63, 94, 0.14), transparent 70%),
+    radial-gradient(30% 40% at 65% 80%, rgba(250, 204, 21, 0.2), transparent 70%);
   filter: blur(20px);
 }
 
@@ -264,8 +265,8 @@
 }
 .callout-note { border-left-color: var(--color-faint); }
 .callout-note .callout-title { color: var(--color-body); }
-.callout-tip { border-left-color: var(--color-accent); background: #f4fbfa; }
-.callout-tip .callout-title { color: var(--color-accent); }
+.callout-tip { border-left-color: #059669; background: #f2fbf6; }
+.callout-tip .callout-title { color: #047857; }
 .callout-lab { border-left-color: #2563eb; background: #f5f8ff; }
 .callout-lab .callout-title { color: #1d4ed8; }
 .callout-quest { border-left-color: #db2777; background: #fef6fa; }
@@ -321,7 +322,7 @@
 .hljs-built_in,
 .hljs-meta .hljs-keyword { color: #7928ca; }
 .hljs-string,
-.hljs-meta .hljs-string { color: #0f766e; }
+.hljs-meta .hljs-string { color: #b45309; }
 .hljs-attr,
 .hljs-attribute,
 .hljs-property,

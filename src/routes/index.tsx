@@ -58,13 +58,13 @@ function Home() {
           <div>
             <p className="eyebrow">Storage · 中文教程 · 从零到专业</p>
             <h1 className="mt-5 text-[40px] font-semibold leading-[1.05] tracking-[-2px] text-ink sm:text-[56px] sm:tracking-[-2.8px]">
-              从认识一块硬盘，
+              从第一块磁盘，
               <br />
-              到扛起一整套集群。
+              到生产级存储集群。
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-              一条循序渐进的存储学习路线。从磁盘、文件系统与 Linux I/O 栈讲起，学会性能测量与 BPF 观测，再深入分布式原理、Ceph
-              生产运维，直到 GPFS 与 AI 训练存储。
+              一条循序渐进的存储学习路线。从磁盘与 Linux I/O 栈讲起，逐步深入性能观测、分布式原理、Ceph
+              生产部署运维，直到 GPFS 与 AI 训练存储。
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
