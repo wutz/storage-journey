@@ -81,10 +81,11 @@ function Home() {
                 查看学习路线
               </Link>
               <Link
-                to="/calculator"
+                to="/animation"
                 className="inline-flex h-11 items-center gap-2 rounded-full px-4 font-medium text-accent hover:text-accent-deep transition-colors"
               >
-                容量计算器 →
+                <PlayIcon className="size-4" />
+                看 4 分钟动画
               </Link>
             </div>
             <dl className="mt-12 grid max-w-md grid-cols-3 gap-6">
@@ -117,6 +118,58 @@ function Home() {
               ))}
             </pre>
           </div>
+        </div>
+      </section>
+
+      {/* Animation teaser */}
+      <section className="mx-auto max-w-[1200px] px-4 pt-24 sm:px-6">
+        <div className="grid items-center gap-10 lg:grid-cols-[5fr_7fr]">
+          <div>
+            <p className="eyebrow">Animation</p>
+            <h2 className="mt-3 text-[32px] font-semibold leading-10 tracking-[-1.28px]">4 分钟，先把整条路走一遍</h2>
+            <p className="mt-3 text-body">
+              一段带中文旁白、背景音乐与音效的动画：看一次 write() 穿过 I/O 栈，RAID 在坏盘后重建，Ceph
+              凌晨三点自动恢复数据，GPFS 为 GPU 集群扛起 checkpoint 洪峰。开始学习之前，先看清你将走过的每一站。
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                to="/animation"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-6 font-medium text-white hover:bg-[#383838] transition-colors"
+              >
+                <PlayIcon className="size-4" />
+                观看动画
+              </Link>
+              <Link
+                to="/calculator"
+                className="inline-flex h-11 items-center rounded-full border border-hairline bg-elevated px-6 font-medium text-ink hover:border-[#d4d4d4] transition-colors"
+              >
+                容量计算器
+              </Link>
+            </div>
+          </div>
+          <Link
+            to="/animation"
+            aria-label="观看 Storage Journey 动画速览"
+            className="group relative block overflow-hidden rounded-2xl border border-hairline bg-[#05070c] shadow-[var(--shadow-float)]"
+          >
+            <img
+              src="/animation/poster.jpg"
+              alt="Storage Journey 动画封面：从第一块磁盘，到生产级存储集群"
+              width={1280}
+              height={720}
+              loading="lazy"
+              className="block aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="inline-flex h-12 items-center gap-2 rounded-full bg-white/95 px-5 font-medium text-ink shadow-[var(--shadow-float)] transition-transform group-hover:scale-105">
+                <PlayIcon className="size-4 text-accent" />
+                播放
+              </span>
+            </span>
+            <span className="absolute bottom-3 right-3 rounded-md bg-black/70 px-2 py-0.5 font-mono text-xs text-white">
+              3:51
+            </span>
+          </Link>
         </div>
       </section>
 
@@ -265,5 +318,13 @@ function Home() {
         </Link>
       </section>
     </main>
+  )
+}
+
+function PlayIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11.2-6.86a1 1 0 0 0 0-1.72L9.5 4.28A1 1 0 0 0 8 5.14Z" />
+    </svg>
   )
 }

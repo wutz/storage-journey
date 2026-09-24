@@ -17,6 +17,9 @@ export function SiteHeader() {
             <Link to="/calculator" className={navLink} activeProps={{ className: 'text-ink' }}>
               容量计算器
             </Link>
+            <Link to="/animation" className={navLink} activeProps={{ className: 'text-ink' }}>
+              动画速览
+            </Link>
             <a href="https://docs.ceph.com/en/latest/" target="_blank" rel="noreferrer" className={navLink}>
               Ceph 文档
             </a>
