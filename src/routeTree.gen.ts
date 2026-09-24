@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnimationRouteImport } from './routes/animation'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as LearnIndexRouteImport } from './routes/learn/index'
 import { Route as LearnSlugRouteImport } from './routes/learn/$slug'
@@ -17,6 +18,11 @@ import { Route as LearnSlugRouteImport } from './routes/learn/$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnimationRoute = AnimationRouteImport.update({
+  id: '/animation',
+  path: '/animation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorRoute = CalculatorRouteImport.update({
@@ -37,12 +43,14 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/animation': typeof AnimationRoute
   '/calculator': typeof CalculatorRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/animation': typeof AnimationRoute
   '/calculator': typeof CalculatorRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
@@ -50,20 +58,23 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/animation': typeof AnimationRoute
   '/calculator': typeof CalculatorRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calculator' | '/learn/$slug' | '/learn/'
+  fullPaths: '/' | '/animation' | '/calculator' | '/learn/$slug' | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calculator' | '/learn/$slug' | '/learn'
-  id: '__root__' | '/' | '/calculator' | '/learn/$slug' | '/learn/'
+  to: '/' | '/animation' | '/calculator' | '/learn/$slug' | '/learn'
+  id:
+    '__root__' | '/' | '/animation' | '/calculator' | '/learn/$slug' | '/learn/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnimationRoute: typeof AnimationRoute
   CalculatorRoute: typeof CalculatorRoute
   LearnSlugRoute: typeof LearnSlugRoute
   LearnIndexRoute: typeof LearnIndexRoute
@@ -76,6 +87,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animation': {
+      id: '/animation'
+      path: '/animation'
+      fullPath: '/animation'
+      preLoaderRoute: typeof AnimationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculator': {
@@ -104,6 +122,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnimationRoute: AnimationRoute,
   CalculatorRoute: CalculatorRoute,
   LearnSlugRoute: LearnSlugRoute,
   LearnIndexRoute: LearnIndexRoute,
