@@ -81,6 +81,16 @@ function Animation() {
           </li>
         ))}
       </ol>
+
+      <h2 className="mt-20 text-[32px] font-semibold leading-10 tracking-[-1.28px]">专题动画</h2>
+      <Link
+        to="/gpfs-ece-animation"
+        className="mt-6 block rounded-xl border border-hairline bg-elevated p-5 transition-colors hover:border-accent"
+      >
+        <p className="font-mono text-xs text-accent">约 6 分钟 · Stage 05</p>
+        <p className="mt-2 text-lg font-semibold text-ink">GPFS ECE 混闪方案设计 · 动画讲解</p>
+        <p className="mt-1 text-body">512 vdisk 预算、8+2p 与 spare、元数据 5%、合并池与切片、多租户 QoS、inode 与 ILM 泄洪。</p>
+      </Link>
     </main>
   )
 }

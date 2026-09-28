@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnimationRouteImport } from './routes/animation'
 import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as GpfsEceAnimationRouteImport } from './routes/gpfs-ece-animation'
 import { Route as LearnIndexRouteImport } from './routes/learn/index'
 import { Route as LearnSlugRouteImport } from './routes/learn/$slug'
 
@@ -30,6 +31,11 @@ const CalculatorRoute = CalculatorRouteImport.update({
   path: '/calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GpfsEceAnimationRoute = GpfsEceAnimationRouteImport.update({
+  id: '/gpfs-ece-animation',
+  path: '/gpfs-ece-animation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnIndexRoute = LearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/animation': typeof AnimationRoute
   '/calculator': typeof CalculatorRoute
+  '/gpfs-ece-animation': typeof GpfsEceAnimationRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/animation': typeof AnimationRoute
   '/calculator': typeof CalculatorRoute
+  '/gpfs-ece-animation': typeof GpfsEceAnimationRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
 }
@@ -60,22 +68,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/animation': typeof AnimationRoute
   '/calculator': typeof CalculatorRoute
+  '/gpfs-ece-animation': typeof GpfsEceAnimationRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/animation' | '/calculator' | '/learn/$slug' | '/learn/'
+  fullPaths:
+    | '/'
+    | '/animation'
+    | '/calculator'
+    | '/gpfs-ece-animation'
+    | '/learn/$slug'
+    | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/animation' | '/calculator' | '/learn/$slug' | '/learn'
+  to:
+    | '/'
+    | '/animation'
+    | '/calculator'
+    | '/gpfs-ece-animation'
+    | '/learn/$slug'
+    | '/learn'
   id:
-    '__root__' | '/' | '/animation' | '/calculator' | '/learn/$slug' | '/learn/'
+    | '__root__'
+    | '/'
+    | '/animation'
+    | '/calculator'
+    | '/gpfs-ece-animation'
+    | '/learn/$slug'
+    | '/learn/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnimationRoute: typeof AnimationRoute
   CalculatorRoute: typeof CalculatorRoute
+  GpfsEceAnimationRoute: typeof GpfsEceAnimationRoute
   LearnSlugRoute: typeof LearnSlugRoute
   LearnIndexRoute: typeof LearnIndexRoute
 }
@@ -103,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gpfs-ece-animation': {
+      id: '/gpfs-ece-animation'
+      path: '/gpfs-ece-animation'
+      fullPath: '/gpfs-ece-animation'
+      preLoaderRoute: typeof GpfsEceAnimationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn/': {
       id: '/learn/'
       path: '/learn'
@@ -124,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnimationRoute: AnimationRoute,
   CalculatorRoute: CalculatorRoute,
+  GpfsEceAnimationRoute: GpfsEceAnimationRoute,
   LearnSlugRoute: LearnSlugRoute,
   LearnIndexRoute: LearnIndexRoute,
 }

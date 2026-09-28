@@ -110,6 +110,7 @@ export const stages: Stage[] = [
       { slug: 'gpfs-concepts', title: 'GPFS / Storage Scale 核心概念', summary: 'NSD、文件系统、仲裁、Token 管理、多集群 owning / accessing 模型与 ECE。', minutes: 50 },
       { slug: 'gpfs-deploy', title: 'GPFS ECE 部署与多集群挂载', summary: '网络规划、安装工具包部署 ECE、创建文件系统与远程集群挂载。', minutes: 60 },
       { slug: 'gpfs-day2', title: 'GPFS Day-2：快照、租户与调优', summary: 'Fileset 与配额、快照、扩缩容、关键调优参数与 CSI 对接 Kubernetes。', minutes: 50 },
+      { slug: 'gpfs-ece-hybrid', title: 'GPFS ECE 混闪方案设计：合并池、多租户与 ILM', summary: '一个 5 节点 HDD+NVMe 集群的完整推导：纠删码与 spare、元数据 5%、512 vdisk 与切片、QoS、inode 与 ILM 策略。', minutes: 60 },
       { slug: 'ai-storage', title: 'AI 训练存储选型', summary: '训练负载特征与 checkpoint，Weka、VAST、3FS、JuiceFS 等方案对比。', minutes: 50 },
       { slug: 'capacity-planning', title: '容量与性能规划', summary: '从业务需求拆出容量、IOPS、带宽指标，估算节点与盘数，以及何时不该选 Ceph。', minutes: 50 },
       { slug: 'oncall-sre', title: 'On-call、SOP 与故障复盘', summary: '告警分级、SOP 写法、变更管理、复盘模板，以及持续成长路径。', minutes: 35 },
