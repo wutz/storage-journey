@@ -121,7 +121,7 @@ mmqos throttle create fs1 --pool all --class fs1-root --maxiops 1 --maxmbs 1 --f
 | 每租户一个文件系统 | 独立文件系统，共享 ECE 盘 | 几十 TB 一档 | 1 天以内 | 文件系统级故障隔离，可按文件系统授权 | 受每个 RG 最多 512 个 vdisk 的限制，份数有限；底层盘仍然共享 |
 | 每租户一个 fileset | 独立 fileset，共享文件系统 | 任意 | 数小时 | 最灵活，最省空间 | 元数据与 token 共享，互相干扰最明显 |
 
-我的观点：大客户用独立集群，中小团队用独立 fileset，"每租户一个文件系统"在 ECE 上很快会碰到 vdisk 数量上限，适合作为少数重要租户的中间档。
+我的观点：大客户用独立集群，中小团队用独立 fileset，"每租户一个文件系统"在 ECE 上很快会碰到 vdisk 数量上限，适合作为少数重要租户的中间档。如果确实要走这条路，vdisk 预算、切片规格和共享 HDD 的 QoS 怎么算，见 [GPFS ECE 混闪方案设计](/learn/gpfs-ece-hybrid) 里的完整推导。
 
 每租户一个 fileset 的完整流程（owning 集群上执行）：
 

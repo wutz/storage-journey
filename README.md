@@ -1,6 +1,6 @@
 # Storage Journey
 
-面向新手、从零到专业的存储中文学习路线。6 个阶段、38 课，从认识一块硬盘讲起，经过文件系统、I/O 性能分析与 BPF 观测，一路走到 Ceph 生产运维、GPFS 与 AI 训练存储。
+面向新手、从零到专业的存储中文学习路线。6 个阶段、39 课，从认识一块硬盘讲起，经过文件系统、I/O 性能分析与 BPF 观测，一路走到 Ceph 生产运维、GPFS 与 AI 训练存储。
 
 | 阶段 | 主题 | 目标 |
 |---|---|---|
@@ -59,6 +59,15 @@ pnpm run deploy
 ```bash
 python3 scripts/animation/gen_vo.py --dry   # 只合成并打印每句时长，检查是否放得下
 python3 scripts/animation/gen_vo.py         # 合成并写回 player.html
+```
+
+### 专题动画：GPFS ECE 混闪方案设计
+
+[/gpfs-ece-animation](/gpfs-ece-animation) 页嵌入了课程《GPFS ECE 混闪方案设计》的讲解动画，约 6 分钟，播放器是 `public/animation/gpfs-ece.html`，引擎与宣传动画相同。这段动画的旁白统一用基准语速合成，不再加快语速去塞时间：播放器根据每句的实测时长，只把放不下的那一段画面等比放慢，画面、音效和字幕始终与旁白同步。
+
+```bash
+python3 scripts/animation/gen_vo_gpfs_ece.py --dry   # 只合成并打印每句时长
+python3 scripts/animation/gen_vo_gpfs_ece.py         # 合成并写回 gpfs-ece.html
 ```
 
 ## 写课文
