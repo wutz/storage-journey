@@ -23,6 +23,9 @@ export function SiteHeader() {
             <a href="https://docs.ceph.com/en/latest/" target="_blank" rel="noreferrer" className={navLink}>
               Ceph 文档
             </a>
+            <a href="https://wutz.dev/" target="_blank" rel="noreferrer" className={navLink}>
+              wutz.dev ↗
+            </a>
           </nav>
         </div>
         <Link
