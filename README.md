@@ -54,7 +54,7 @@ pnpm run deploy
 - 封面图：`public/animation/poster.jpg`
 - 调试参数：`player.html?t=95&still=1` 定格在第 95 秒；`?scan=1` 从头到尾扫一遍所有帧，结果写在 `<body data-scan>` 上
 
-修改旁白文案或场景时长后，重新合成配音并写回播放器（需要 [uv](https://docs.astral.sh/uv/)，使用 edge-tts 的 `zh-CN-XiaoxiaoNeural` 女声）：
+修改旁白文案或场景时长后，重新合成配音并写回播放器（需要环境变量 `OPENROUTER_API_KEY`，通过 OpenRouter 调用 Google Gemini TTS `google/gemini-3.8-flash-tts`，默认 `Kore` 女声，可用 `VO_VOICE` 换音色）。Gemini TTS 不能调语速，读得比预留时间长的句子，播放器会把所在那一段画面等比放慢，画面、音效和字幕始终与旁白同步：
 
 ```bash
 python3 scripts/animation/gen_vo.py --dry   # 只合成并打印每句时长，检查是否放得下
@@ -63,7 +63,7 @@ python3 scripts/animation/gen_vo.py         # 合成并写回 player.html
 
 ### 专题动画：GPFS ECE 混闪方案设计
 
-[/gpfs-ece-animation](/gpfs-ece-animation) 页嵌入了课程《GPFS ECE 混闪方案设计》的讲解动画，约 6 分钟，播放器是 `public/animation/gpfs-ece.html`，引擎与宣传动画相同。这段动画的旁白统一用基准语速合成，不再加快语速去塞时间：播放器根据每句的实测时长，只把放不下的那一段画面等比放慢，画面、音效和字幕始终与旁白同步。
+[/gpfs-ece-animation](/gpfs-ece-animation) 页嵌入了课程《GPFS ECE 混闪方案设计》的讲解动画，约 6 分钟，播放器是 `public/animation/gpfs-ece.html`，引擎与配音方式都与宣传动画相同。
 
 ```bash
 python3 scripts/animation/gen_vo_gpfs_ece.py --dry   # 只合成并打印每句时长
