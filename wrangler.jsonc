@@ -6,6 +6,7 @@
   "main": "@tanstack/react-start/server-entry",
   "workers_dev": true,
   "preview_urls": true,
+  "routes": [{ "pattern": "storage-journey.wutz.dev", "custom_domain": true }],
   // `wrangler preview`（Cloudflare 非生产分支构建使用）要求存在 previews 块，可为空
   "previews": {},
   "observability": { "enabled": true },

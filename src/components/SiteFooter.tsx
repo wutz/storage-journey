@@ -30,7 +30,11 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-hairline">
         <p className="mx-auto max-w-[1400px] px-4 py-5 text-xs text-faint sm:px-6">
-          Ceph® 是 Linux Foundation 的注册商标，IBM Storage Scale 是 IBM 的商标，文中提及的其他产品名称归各自所有者。本站为独立学习资料。
+          Ceph® 是 Linux Foundation 的注册商标，IBM Storage Scale 是 IBM 的商标，文中提及的其他产品名称归各自所有者。本站为独立学习资料。更多教程与工具见{' '}
+          <a href="https://wutz.dev/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-ink">
+            wutz.dev
+          </a>
+          。
         </p>
       </div>
     </footer>
