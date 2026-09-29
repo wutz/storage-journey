@@ -6,9 +6,6 @@
 
 示例环境：owning 集群 `storage.example.com`，5 台 ECE 服务器组成一个恢复组 `rg1`（节点类 `ece5`），4 个租户文件系统 `fs1`～`fs4`；租户通过 accessing 集群和 Kubernetes CSI 挂载。数字来自一次真实的方案评审，已做脱敏。
 
-> [!TIP] 先看动画
-> 这一课配有一段约 6 分钟的[动画讲解](/gpfs-ece-animation)，按下面路线图的顺序把每个数字的来由画出来。先看一遍动画建立全局印象，再回来读推导细节，会轻松很多。
-
 > [!NOTE] 本课需要的环境
 > 推导部分只需要纸笔或 Python。ILM 策略可以在单节点 Developer Edition 上用两个存储池练习；`mmvdisk` 相关命令需要 ECE 环境。命令基于截至本文写作时的 Storage Scale 5.2.x，参数名、上限值（尤其是 inode 测试上限）以对应版本的 [IBM Storage Scale 文档](https://www.ibm.com/docs/en/storage-scale)和 FAQ 为准。
 
