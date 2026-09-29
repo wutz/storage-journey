@@ -49,7 +49,7 @@ pnpm run deploy
 
 首页和 [/animation](/animation) 页嵌入了一段约 4 分钟的宣传动画，带中文女声旁白、背景音乐和音效，按课程的 6 个阶段依次展开。
 
-- 播放器是一个独立文件：`public/animation/player.html`。画面用 Canvas 逐帧绘制，每一帧都只由时间决定；背景音乐与音效用 Web Audio 实时合成；旁白是 mp3，以 base64 内嵌在文件里，字幕跟着旁白的时间轴走
+- 播放器是一个独立文件：`public/animation/player.html`。画面用 Canvas 逐帧绘制，每一帧都只由时间决定；背景音乐与音效用 Web Audio 实时合成；旁白是 AAC（m4a），以 base64 内嵌在文件里，字幕跟着旁白的时间轴走
 - 播放器支持拖动进度、按章节跳转、全屏，也能在浏览器里导出 mp4 / webm 视频
 - 封面图：`public/animation/poster.jpg`
 - 调试参数：`player.html?t=95&still=1` 定格在第 95 秒；`?scan=1` 从头到尾扫一遍所有帧，结果写在 `<body data-scan>` 上

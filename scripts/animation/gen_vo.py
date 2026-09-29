@@ -11,9 +11,9 @@
   放不下的句子不再提速，由播放器按实测时长把所在那一段画面等比放慢（见 player.html 时间轴），
   输出里标记 SLOW 仅作提示
 - 字幕文字与旁白一致；spoken 用于替换缩写的读法（如 IOPS → I O P S）
-- 时长用 macOS 自带的 afinfo 测量
+- Gemini TTS 只输出 PCM，用 macOS 自带的 afconvert 转成 AAC（m4a）内嵌；时长用 afinfo 测量
 """
-import base64, json, os, pathlib, re, subprocess, sys, tempfile, time, urllib.error, urllib.request
+import base64, json, os, pathlib, re, subprocess, sys, tempfile, time, wave, urllib.error, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PLAYER = ROOT / 'public/animation/player.html'
@@ -91,7 +91,7 @@ def duration(f):
 
 def tts(text, f):
     key = os.environ.get('OPENROUTER_API_KEY') or sys.exit('缺少环境变量 OPENROUTER_API_KEY')
-    body = json.dumps(dict(model=MODEL, input=text, voice=VOICE, response_format='mp3')).encode()
+    body = json.dumps(dict(model=MODEL, input=text, voice=VOICE, response_format='pcm')).encode()
     req = urllib.request.Request(API, body, {'Content-Type': 'application/json', 'Authorization': f'Bearer {key}'})
     for n in range(5):  # 429 / 5xx / 网络偶发失败时退避重试
         try:
@@ -107,13 +107,11 @@ def tts(text, f):
         time.sleep(2 ** n)
     else:
         sys.exit(f'TTS 请求多次失败：{err}')
-    if 'pcm' in ctype or 'L16' in ctype:  # 服务端没给 mp3 时，按 24kHz 16bit 单声道包成 WAV
-        rate = int(m.group(1)) if (m := re.search(r'rate=(\d+)', ctype)) else 24000
-        import wave
-        with wave.open(f, 'wb') as w:
-            w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(data)
-    else:
-        open(f, 'wb').write(data)
+    # Gemini TTS 只返回 16bit 单声道 PCM：先包成 WAV，再用 macOS 自带的 afconvert 压成 AAC
+    rate = int(m.group(1)) if (m := re.search(r'rate=(\d+)', ctype)) else 24000
+    with wave.open(f + '.wav', 'wb') as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(data)
+    subprocess.run(['afconvert', '-f', 'm4af', '-d', 'aac', '-b', '64000', f + '.wav', f], check=True)
 
 
 def main():
@@ -121,7 +119,7 @@ def main():
     out, over = [], 0
     with tempfile.TemporaryDirectory() as tmp:
         for i, (s, a, cap, spoken) in enumerate(L):
-            f, win = f'{tmp}/l{i:02d}', budget(i)
+            f, win = f'{tmp}/l{i:02d}.m4a', budget(i)
             tts(spoken or cap, f)
             d = duration(f)
             over += d > win
