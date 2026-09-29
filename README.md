@@ -61,15 +61,6 @@ python3 scripts/animation/gen_vo.py --dry   # 只合成并打印每句时长，�
 python3 scripts/animation/gen_vo.py         # 合成并写回 player.html
 ```
 
-### 专题动画：GPFS ECE 混闪方案设计
-
-[/gpfs-ece-animation](/gpfs-ece-animation) 页嵌入了课程《GPFS ECE 混闪方案设计》的讲解动画，约 6 分钟，播放器是 `public/animation/gpfs-ece.html`，引擎与配音方式都与宣传动画相同。
-
-```bash
-python3 scripts/animation/gen_vo_gpfs_ece.py --dry   # 只合成并打印每句时长
-python3 scripts/animation/gen_vo_gpfs_ece.py         # 合成并写回 gpfs-ece.html
-```
-
 ## 写课文
 
 - 大纲与元数据：`src/content/curriculum.ts`
