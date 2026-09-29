@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """重新生成《GPFS ECE 混闪方案设计》动画的中文旁白，写回 public/animation/gpfs-ece.html 中内嵌的 VO_DATA。
 
-用法（需要 uv；无需其它依赖）：
+用法（需要环境变量 OPENROUTER_API_KEY；无需其它依赖）：
     python3 scripts/animation/gen_vo_gpfs_ece.py          # 生成并写回播放器
     python3 scripts/animation/gen_vo_gpfs_ece.py --dry    # 只合成并打印每句时长，不写文件
 
 合成、测时长与写回的逻辑复用 gen_vo.py，这里只替换播放器路径、场景时长和文案。
-与宣传动画不同，这里不靠加快语速去塞时间：统一用基准语速合成，播放器按每句实测时长
-自动把放不下的场景整体等比放慢（见 gpfs-ece.html 时间轴里的 k），画面与旁白始终同步。
+与宣传动画一样，播放器按每句实测时长
+自动把放不下的那一段画面等比放慢（见 gpfs-ece.html 时间轴里的 k），画面与旁白始终同步。
 缩写的读法（ECE → E C E 等）由 SPEAK 统一替换，文案里写正常的书面形式即可。
 """
 import pathlib, re, sys
@@ -93,7 +93,7 @@ LINES = [
 
 gen_vo.PLAYER = gen_vo.ROOT / 'public/animation/gpfs-ece.html'
 gen_vo.DUR = DUR
-gen_vo.budget = lambda i: float('inf')  # 不提速、不报 OVER，由播放器按时长放慢场景
+gen_vo.budget = lambda i: float('inf')  # 不报 SLOW，由播放器按时长放慢场景
 gen_vo.L = [(s, a, cap, speak(cap) if speak(cap) != cap else None) for s, a, cap in LINES]
 
 if __name__ == '__main__':

@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
 """重新生成动画的中文旁白，并写回 public/animation/player.html 中内嵌的 VO_DATA。
 
-用法（需要 uv；无需其它依赖）：
+用法（需要环境变量 OPENROUTER_API_KEY；无需其它依赖）：
     python3 scripts/animation/gen_vo.py          # 生成并写回播放器
     python3 scripts/animation/gen_vo.py --dry    # 只合成并打印每句时长，不写文件
 
-- 语音：Microsoft Edge 神经语音（edge-tts），默认 zh-CN-XiaoxiaoNeural（女声，温暖自然）
-- 每句写在对应场景的时间点上（相对场景开头的秒数）；若读得比留给它的时间长，
-  会自动小幅加快语速（最多 +14%），仍放不下时在输出里标记 OVER，需要缩短文案
+- 语音：OpenRouter 上的 Google Gemini TTS（google/gemini-3.8-flash-tts），默认 Kore 女声；
+  可用环境变量 VO_VOICE 换成其它音色（Zephyr / Aoede / Leda …）
+- 每句写在对应场景的时间点上（相对场景开头的秒数）；Gemini TTS 不能调语速，
+  放不下的句子不再提速，由播放器按实测时长把所在那一段画面等比放慢（见 player.html 时间轴），
+  输出里标记 SLOW 仅作提示
 - 字幕文字与旁白一致；spoken 用于替换缩写的读法（如 IOPS → I O P S）
-- 时长用 macOS 自带的 afinfo 测量
+- Gemini TTS 只输出 PCM，用 macOS 自带的 afconvert 转成 AAC（m4a）内嵌；时长用 afinfo 测量
 """
-import base64, json, pathlib, re, subprocess, sys, tempfile
+import base64, json, os, pathlib, re, subprocess, sys, tempfile, time, wave, urllib.error, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PLAYER = ROOT / 'public/animation/player.html'
-VOICE = 'zh-CN-XiaoxiaoNeural'
-BASE_RATE = 8
-MAX_RATE = 14
+MODEL = 'google/gemini-3.8-flash-tts'
+VOICE = os.environ.get('VO_VOICE', 'Kore')
+API = 'https://openrouter.ai/api/v1/audio/speech'
 # 各场景时长（秒），需与 player.html 中 SCENES 的 dur 保持一致
 DUR = [10.5, 30, 37, 31, 32.5, 40.5, 31.5, 18]
 
@@ -87,13 +89,29 @@ def duration(f):
     return float(re.search(r'estimated duration: ([\d.]+)', o).group(1))
 
 
-def tts(text, rate, f):
-    for _ in range(4):  # 网络偶发失败时重试
-        r = subprocess.run(['uvx', 'edge-tts', '--voice', VOICE, f'--rate=+{rate}%', '--text', text,
-                            '--write-media', f], capture_output=True)
-        if r.returncode == 0:
-            return
-    raise SystemExit(r.stderr.decode())
+def tts(text, f):
+    key = os.environ.get('OPENROUTER_API_KEY') or sys.exit('缺少环境变量 OPENROUTER_API_KEY')
+    body = json.dumps(dict(model=MODEL, input=text, voice=VOICE, response_format='pcm')).encode()
+    req = urllib.request.Request(API, body, {'Content-Type': 'application/json', 'Authorization': f'Bearer {key}'})
+    for n in range(5):  # 429 / 5xx / 网络偶发失败时退避重试
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                data, ctype = r.read(), r.headers.get('Content-Type', '')
+            break
+        except urllib.error.HTTPError as e:
+            err = f'{e.code} {e.read().decode(errors="replace")}'
+            if e.code not in (429, 500, 502, 503, 504):
+                sys.exit(f'TTS 请求失败：{err}')
+        except (urllib.error.URLError, TimeoutError) as e:
+            err = str(e)
+        time.sleep(2 ** n)
+    else:
+        sys.exit(f'TTS 请求多次失败：{err}')
+    # Gemini TTS 只返回 16bit 单声道 PCM：先包成 WAV，再用 macOS 自带的 afconvert 压成 AAC
+    rate = int(m.group(1)) if (m := re.search(r'rate=(\d+)', ctype)) else 24000
+    with wave.open(f + '.wav', 'wb') as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(data)
+    subprocess.run(['afconvert', '-f', 'm4af', '-d', 'aac', '-b', '64000', f + '.wav', f], check=True)
 
 
 def main():
@@ -101,15 +119,11 @@ def main():
     out, over = [], 0
     with tempfile.TemporaryDirectory() as tmp:
         for i, (s, a, cap, spoken) in enumerate(L):
-            f, win, rate = f'{tmp}/l{i:02d}.mp3', budget(i), BASE_RATE
-            while True:
-                tts(spoken or cap, rate, f)
-                d = duration(f)
-                if d <= win or rate >= MAX_RATE:
-                    break
-                rate = min(MAX_RATE, rate + max(4, int((d / win - 1) * 100) + 3))
+            f, win = f'{tmp}/l{i:02d}.m4a', budget(i)
+            tts(spoken or cap, f)
+            d = duration(f)
             over += d > win
-            print(f'{i:02d} 场景{s} {a:5.1f}s 可用 {win:4.1f}s 实际 {d:4.2f}s 语速 +{rate}%' + ('' if d <= win else '  <-- OVER'))
+            print(f'{i:02d} 场景{s} {a:5.1f}s 可用 {win:4.1f}s 实际 {d:4.2f}s' + ('' if d <= win else '  <-- SLOW'))
             out.append(dict(s=s, a=a, d=round(d, 2), text=cap, b64=base64.b64encode(open(f, 'rb').read()).decode()))
     if dry:
         return
@@ -118,7 +132,7 @@ def main():
     html, n = re.subn(r'const VO_DATA=\[.*?\];\n', lambda m: f'const VO_DATA={data};\n', html, count=1, flags=re.S)
     assert n == 1, '未在 player.html 中找到 VO_DATA'
     PLAYER.write_text(html)
-    print(f'已写入 {PLAYER.relative_to(ROOT)}' + (f'，{over} 句超时，请缩短文案' if over else ''))
+    print(f'已写入 {PLAYER.relative_to(ROOT)}' + (f'，{over} 句超出原时间窗，播放器会放慢对应画面' if over else ''))
 
 
 if __name__ == '__main__':
